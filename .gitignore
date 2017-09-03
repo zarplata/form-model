@@ -1,0 +1,8 @@
+.idea/
+node_modules/
+npm-debug.log
+*.db
+bower_components/
+webpack-stats.json
+yarn-error.log
+ignored
