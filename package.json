@@ -3,10 +3,21 @@
   "version": "0.1.0",
   "description": "Form model ",
   "main": "./src/index.js",
-  "repository": "https://github.com/zarplata/form-model.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zarplata/form-model.git"
+  },
   "author": "Communist <apvnsk@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.4"
+  },
+  "bugs": {
+    "url": "https://github.com/zarplata/form-model/issues"
+  },
+  "homepage": "https://github.com/zarplata/form-model#readme",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
