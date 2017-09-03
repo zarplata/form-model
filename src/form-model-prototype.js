@@ -4,12 +4,14 @@ import isObject from 'lodash/isObject';
 import isEmpty from 'lodash/isEmpty';
 import clone from 'lodash/clone';
 import uniqueId from 'lodash/uniqueId';
+import isFunction from 'lodash/isFunction';
 
-export class FormModelPrototype {
-    constructor(componentUpdate) {
+export default class FormModelPrototype {
+    constructor(defaultModel, dispatch) {
+        this._defaultModel = defaultModel;
+        this._dispatch = dispatch;
+
         this.formData = this._getDefaultModel();
-
-        this.componentUpdate = componentUpdate;
 
         this._extendWithNameAndKeyRecursive(this.formData);
 
@@ -18,14 +20,6 @@ export class FormModelPrototype {
 
     getInvalidFields() {
         return this._invalidFields;
-    }
-
-    _addInvalidField(field) {
-        this._invalidFields.push(field);
-    }
-
-    _resetInvalidFields() {
-        this._invalidFields = [];
     }
 
     getData() {
@@ -38,57 +32,30 @@ export class FormModelPrototype {
         this._extendWithNameAndKeyRecursive(this.formData);
     }
 
-    isEmpty() {
-        return this._isEmptyRecursive(this.formData);
+    _addInvalidField(field) {
+        this._invalidFields.push(field);
     }
 
-    _isEmptyRecursive(node) {
-        const isEmptyNode = this._isEmptyNode(node);
-
-        if (isEmptyNode) {
-            return true;
-        }
-
-        if (node.hasOwnProperty('properties')) {
-            for (let field in node.properties) {
-                if (!this._isEmptyRecursive(node.properties[field])) {
-                    return false
-                }
-            }
-            return true;
-        } else if (node.hasOwnProperty('items')) {
-            if (!node.items.length) return true;
-            for (let i in node.items) {
-                if (!this._isEmptyRecursive(node.items[i])) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        return false;
-    }
-
-    _isEmptyNode(node) {
-        if (node.hasOwnProperty('value')) {
-            return isEmpty(node.value)
-        }
-
-        return false;
+    _resetInvalidFields() {
+        this._invalidFields = [];
     }
 
     _getDefaultModel() {
-        return {};
+        if (isFunction(this._defaultModel)) {
+            return this._defaultModel()
+        }
+
+        return this._defaultModel;
     }
 
     _extendWithNameAndKeyRecursive(node) {
         let { name = '' } = node;
 
-        if (node.hasOwnProperty('properties')) {
-            name = name ? `${name}.properties` : 'properties';
+        if (node.hasOwnProperty('fields')) {
+            name = name ? `${name}.fields` : 'fields';
 
-            for (let key in node.properties) {
-                let propertyNode = node.properties[key];
+            for (let key in node.fields) {
+                let propertyNode = node.fields[key];
                 propertyNode.name = `${name}.${key}`;
 
                 propertyNode.handleChange = (value, needValidate) => {
@@ -121,10 +88,10 @@ export class FormModelPrototype {
     }
 
     _mergeRecursive(node, valueNode) {
-        if (node.hasOwnProperty('properties')) {
-            if (valueNode.properties) {
-                for (let key in node.properties) {
-                    this._mergeRecursive(node.properties[key], valueNode.properties[key] || []);
+        if (node.hasOwnProperty('fields')) {
+            if (valueNode.fields) {
+                for (let key in node.fields) {
+                    this._mergeRecursive(node.fields[key], valueNode.fields[key] || []);
                 }
             }
         } else if (node.hasOwnProperty('items')) {
@@ -162,8 +129,8 @@ export class FormModelPrototype {
 
         this._unsetError(field);
 
-        if (this.componentUpdate) {
-            this.componentUpdate();
+        if (this._dispatch) {
+            this._dispatch();
         }
     }
 
@@ -182,8 +149,8 @@ export class FormModelPrototype {
 
         this._unsetError(item);
 
-        if (this.componentUpdate) {
-            this.componentUpdate();
+        if (this._dispatch) {
+            this._dispatch();
         }
     }
 
@@ -201,8 +168,8 @@ export class FormModelPrototype {
             this._validateRecursive(this.formData, false);
         }
 
-        if (this.componentUpdate) {
-            this.componentUpdate();
+        if (this._dispatch) {
+            this._dispatch();
         }
     }
 
@@ -230,9 +197,9 @@ export class FormModelPrototype {
             this._addInvalidField(node);
         }
 
-        if (node.hasOwnProperty('properties')) {
-            for (let key in node.properties) {
-                isValid = this._validateRecursive(node.properties[key], needInvalidFields) && isValid;
+        if (node.hasOwnProperty('fields')) {
+            for (let key in node.fields) {
+                isValid = this._validateRecursive(node.fields[key], needInvalidFields) && isValid;
             }
         } else if (node.hasOwnProperty('items')) {
             for (let key in node.items) {
@@ -280,5 +247,3 @@ export class FormModelPrototype {
         field.error = false;
     }
 }
-
-export default FormModelPrototype;

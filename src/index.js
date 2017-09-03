@@ -1,1 +1,3 @@
-export { FormModelPrototype } from './form-model-prototype';
+import FormModelPrototype from './form-model-prototype';
+
+export default FormModelPrototype;
