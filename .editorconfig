@@ -1,0 +1,51 @@
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+trim_trailing_whitespace = true
+charset = utf-8
+max_line_length = 120
+
+[*.php]
+indent_size = 4
+
+[*.js]
+indent_size = 4
+
+[*.less]
+indent_size = 4
+
+[*.variables]
+indent_size = 4
+
+[*.overrides]
+indent_size = 4
+
+[*.jsx]
+indent_size = 4
+
+[*.conf]
+indent_size = 4
+
+[*.tpl]
+indent_size = 2
+
+[*.yml]
+indent_size = 2
+
+[{*.less,*.css,semantic/*.overrides,semantic/*.variables}]
+indent_size = 2
+
+[*.sh]
+indent_size = 4
+
+[*-frontend.conf]
+indent_size = 4
+
+[phpunit.xml]
+indent_size = 4
+
+[*.json]
+indent_size = 2

@@ -3,21 +3,33 @@
   "version": "0.1.0",
   "description": "Form model ",
   "main": "./src/index.js",
+  "scripts": {
+    "build": "babel src -d lib",
+    "prepublish": "yarn run build"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb": "15.1.0",
+    "eslint-plugin-flowtype": "2.35.1",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "7.3.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zarplata/form-model.git"
   },
   "author": "Communist <apvnsk@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "lodash": "^4.17.4"
-  },
   "bugs": {
     "url": "https://github.com/zarplata/form-model/issues"
   },
-  "homepage": "https://github.com/zarplata/form-model#readme",
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  }
+  "homepage": "https://github.com/zarplata/form-model#readme"
 }
