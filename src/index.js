@@ -20,7 +20,7 @@ export default class FormModelPrototype {
 
     getInvalidFields() {
         return this._invalidFields;
-    }
+    } // ddd
 
     getData() {
         return this._formData;
