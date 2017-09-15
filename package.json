@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
     "build": "babel src -d lib",
-    "prepare": "yarn run build"
+    "prepare": "rm -rf lib & yarn run build"
   },
   "dependencies": {
     "lodash": "^4.17.4"
@@ -34,5 +34,17 @@
   "bugs": {
     "url": "https://github.com/zarplata/form-model/issues"
   },
-  "homepage": "https://github.com/zarplata/form-model#readme"
+  "homepage": "https://github.com/zarplata/form-model#readme",
+  "files": [
+    "README.md",
+    "package.json",
+    "LICENSE",
+    ".npmignore",
+    ".gitignore",
+    ".editorconfig",
+    ".babelrc",
+    "test",
+    "src",
+    "lib"
+  ]
 }
