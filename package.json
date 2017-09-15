@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
     "build": "babel src -d lib",
-    "prepare": "babel src -d dist"
+    "prepare": "yarn run build"
   },
   "dependencies": {
     "lodash": "^4.17.4"
