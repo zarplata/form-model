@@ -2,7 +2,7 @@
   "name": "form-model",
   "version": "0.1.2",
   "description": "Form model ",
-  "main": "./src/index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
     "build": "babel src -d lib",
