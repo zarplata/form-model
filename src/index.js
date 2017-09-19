@@ -1,6 +1,3 @@
-import assign from 'lodash/assign';
-import cloneDeep from 'lodash/cloneDeep';
-import isObject from 'lodash/isObject';
 import isEmpty from 'lodash/isEmpty';
 import clone from 'lodash/clone';
 import uniqueId from 'lodash/uniqueId';
@@ -20,7 +17,7 @@ export default class FormModelPrototype {
 
     getInvalidFields() {
         return this._invalidFields;
-    } // ddd
+    }
 
     getData() {
         return this._formData;
@@ -99,7 +96,7 @@ export default class FormModelPrototype {
                 var count = valueNode.items.length - node.items.length;
 
                 for (let i = 0; i < count; i++) {
-                    node.items.push(cloneDeep(node.defaultItem()));
+                    node.items.push(node.defaultItem());
                 }
 
                 for (let key in node.items) {
@@ -107,7 +104,7 @@ export default class FormModelPrototype {
                 }
             }
         } else {
-            assign(node, valueNode);
+            return { ...node, ...valueNode };
         }
 
         node = clone(node);
@@ -220,7 +217,7 @@ export default class FormModelPrototype {
 
         // проверяем необязательное поле оно не заполнено, то все ок
         if (!field.required) {
-            if ( (isObject(field.value) && isEmpty(field.value)) || !field.value) {
+            if (!field.value || isEmpty(field.value)) {
                 this._unsetError(field);
                 return true;
             }
